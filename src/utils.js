@@ -30,3 +30,5 @@ export const dateBuilder = (givenDate) => {
 
     return `${day} ${date} ${month} ${year}`;
 }
+
+export const roundTemperature = (temperature) => `${Math.round(temperature)}º C`;

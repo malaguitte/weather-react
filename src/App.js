@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Config from "./config";
-import { dateBuilder } from "./utils";
+import { dateBuilder, roundTemperature } from "./utils";
 
 const PLACEHOLDER_TEXT = "Search...";
 
@@ -36,27 +36,34 @@ function App() {
         </div>
         {/* Search box */}
 
-        {/* Location Box */}
-        <div className="location-box">
-          <div className="location">
-            New York City, US
-          </div>
-          <div className="date">
-            {dateBuilder(new Date())}
-          </div>
-        </div>
-        {/* Location Box */}
+        {(weather.main) ? (
 
-        {/* Weather Box */}
-        <div className="weather-box">
-          <div className="temperature">
-            15º C
+        <div>
+          {/* Location Box */}
+            <div className="location-box">
+            <div className="location">
+              {weather.name}, {weather.sys.country}
+            </div>
+            <div className="date">
+              {dateBuilder(new Date())}
+            </div>
           </div>
-          <div className="weather">
-            Sunny
+          {/* Location Box */}
+
+          {/* Weather Box */}
+          <div className="weather-box">
+            <div className="temperature">
+              {roundTemperature(weather.main.temp)}
+            </div>
+            <div className="weather">
+              Sunny
+            </div>
           </div>
+          {/* Weather Box */}
         </div>
-        {/* Weather Box */}
+
+        ) : ("")}
+
       </main>
     </div>
   );
