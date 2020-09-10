@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import Config from "./config";
 import { dateBuilder } from "./utils";
 
 const PLACEHOLDER_TEXT = "Search...";
 
 function App() {
+
+  const [query, setQuery] = useState("");
+  const [weather, setWeather] = useState("");
+
+  const search = async (event) => {
+    if (event.key === "Enter") {
+      const response = await fetch(Config.getQuery(query));
+      const result = await response.json();
+      setWeather(result);
+      setQuery("");
+      console.log("weather", result);
+    }
+  }
+
   return (
     <div className="app warm">
       <main>
@@ -14,6 +28,9 @@ function App() {
             type="text"
             className="search-bar"
             placeholder={PLACEHOLDER_TEXT}
+            onChange={event => setQuery(event.target.value)}
+            value={query}
+            onKeyPress={search}
           >
           </input>
         </div>
