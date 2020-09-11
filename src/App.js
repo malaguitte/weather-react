@@ -3,6 +3,7 @@ import Config from "./config";
 import { dateBuilder, roundTemperature } from "./utils";
 
 const PLACEHOLDER_TEXT = "Search...";
+const TEMPERATURE_THRESHOLD = 16;
 
 function App() {
 
@@ -15,12 +16,22 @@ function App() {
       const result = await response.json();
       setWeather(result);
       setQuery("");
-      console.log("weather", result);
     }
   }
 
+  const getBackgroundClass = (temperature) => {
+    return temperature > TEMPERATURE_THRESHOLD 
+      ? "app warm" 
+      : "app cold";
+  }
+
   return (
-    <div className="app warm">
+    <div className={
+      (weather?.main?.temp) 
+          ? getBackgroundClass(weather.main.temp)
+          : "app"
+    }
+    >
       <main>
         {/* Search box */}
         <div className="search-box">
@@ -36,13 +47,13 @@ function App() {
         </div>
         {/* Search box */}
 
-        {(weather.main) ? (
+        {(weather?.main) ? (
 
         <div>
           {/* Location Box */}
             <div className="location-box">
             <div className="location">
-              {weather.name}, {weather.sys.country}
+              {weather.name}, {weather.sys?.country}
             </div>
             <div className="date">
               {dateBuilder(new Date())}
@@ -56,7 +67,7 @@ function App() {
               {roundTemperature(weather.main.temp)}
             </div>
             <div className="weather">
-              Sunny
+              {weather.weather[0]?.main}
             </div>
           </div>
           {/* Weather Box */}
