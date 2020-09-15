@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Config from "./config";
 import { dateBuilder, roundTemperature } from "./utils";
 
-const PLACEHOLDER_TEXT = "Search...";
-const TEMPERATURE_THRESHOLD = 16;
+const PLACEHOLDER_TEXT = Config.searchPlaceholder;
+const TEMPERATURE_THRESHOLD = Config.TEMPERATURE_THRESHOLD;
 
 function App() {
 
